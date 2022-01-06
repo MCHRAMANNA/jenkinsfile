@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+    tools {
+        maven 'maven'
+    }
+        stages {
+         stage('scm') {
+          steps {
+              checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MCHRAMANNA/latestfinal.git']]])
+			  }
+			 }
+         stage('build') {
+          steps {
+              sh 'mvn -Dmaven.test.failure.ignore=true package'
+        }    
+      }
+    }
+  }
